@@ -1,4 +1,25 @@
-const timestamp = Date.now()
-const buf = Buffer.allocUnsafe(6);
-console.log(buf.writeIntBE(Math.floor(timestamp/1000), 0, 4).toString(36))
-console.log(Buffer.from((Math.floor(timestamp/1000) << 32) + (1 << 22) + 532589))
+const fs = require("fs")
+var enumerator = BigInt(fs.readFileSync("./snowflakeenumerator.txt"))
+exports.getNewSnowflake = newSnowflake;
+function newSnowflake() {
+	let timestamp = BigInt(Date.now())
+	console.log((timestamp/1000n << 32n))
+	console.log((BigInt(enumerator) << 22n))
+	console.log(BigInt(Math.random * 2^22))
+	let tempNum = (timestamp/1000n << 32n) + (BigInt(enumerator) << 22n) + BigInt(Math.floor(Math.random() * 4194304))
+	// ((timestamp/1000n) << 32n))
+	fs.writeFile("./snowflakeenumerator.txt", (enumerator + 1n) % 1024n, () => {})
+	return tempNum
+}
+function binOut(num) {
+	let output = ""
+	let tempNum = num
+	while (true) {
+		if(!tempNum) break;
+		output = (tempNum % 2n ? "1" : "0") + output
+		tempNum = (tempNum/2n)
+	}
+	return output
+}
+
+console.log(binOut(newSnowflake()))
