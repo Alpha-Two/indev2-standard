@@ -4,12 +4,29 @@
     "$defs": {
         "cell": {
             "type": "object",
-            "properties": {
-                "modInternalID": { "type": "number" },
-                "modExternalID": { "type": "number" },
-                "cellShortID": { "type": "number" }
-            },
+            "oneOf": [
+                {
+                    "properties": {
+                        "devID": { "$ref": "#/$defs/ID" },
+                        "modInternalID": { "$ref": "#/$defs/ID" },
+                        "modExternalID": { "$ref": "#/$defs/ID" },
+                        "cellShortID": { "$ref": "#/$defs/ID" }
+                    }
+                },
+                {
+                    "properties": {
+                        "marker": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ],
             "required": ["modExternalID", "cellShortID"]
+        },
+        "ID": {
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMaximum": 18446744073709551616
         }
     },
     "properties": {
@@ -27,16 +44,8 @@
                             {
                                 "type": "array",
                                 "prefixItems": [
-                                    {
-                                        "type": "integer",
-                                        "minimum": 0,
-                                        "exclusiveMaximum": 18446744073709551616
-                                    },
-                                    {
-                                        "type": "integer",
-                                        "minimum": 0,
-                                        "exclusiveMaximum": 18446744073709551616
-                                    }
+                                    { "$ref": "#/$defs/ID" },
+                                    { "$ref": "#/$defs/ID" }
                                 ]
                             }
                         ]
@@ -44,6 +53,9 @@
                     "permissions": {
                         "type": "string",
                         "pattern": "^[AD][NS][NO]$"
+                    },
+                    "config": {
+                        "type": "object"
                     }
                 },
                 "required": ["referenceAddress"]
@@ -54,11 +66,7 @@
             "items": {
                 "type": "object",
                 "properties": {
-                    "referenceAddress": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "exclusiveMaximum": 18446744073709551616
-                    }
+                    "referenceAddress": { "$ref": "#/$defs/ID" }
                 }
             }
         },
@@ -84,7 +92,36 @@
                 "beforeMover",
                 "afterMover"
             ]
+        },
+        "levels": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "config": {
+                        "type": "object"
+                    },
+                    "height": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "width": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "levelArray": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/$defs/cell"
+                            }
+                        }
+                    }
+                },
+                "required": ["height", "width", "levelArray"]
+            }
         }
     },
-    "required": ["cellOrder"]
+    "required": ["cellArray"]
 }
