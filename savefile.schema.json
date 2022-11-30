@@ -67,7 +67,8 @@
                 "type": "object",
                 "properties": {
                     "referenceAddress": { "$ref": "#/$defs/ID" }
-                }
+                },
+                "required": ["referenceAddress"]
             }
         },
         "cellOrder": {

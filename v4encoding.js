@@ -1,9 +1,12 @@
 const jsen = require("jsen")
 const fs = require("fs")
-schema = JSON.parse(fs.readFileSync("./v4exanded.schema.json"))
-testingJSON = JSON.parse(fs.readFileSync("./testing.json"))
+schema = JSON.parse(fs.readFileSync("./savefile.schema.json"))
+testingJSON = JSON.parse(fs.readFileSync("./samplefiles/savefile.json"))
 var validate = jsen(schema);
-var valid = validate(testingJSON);
+
+if(!validate(testingJSON)) {
+	throw "JSON not valid";
+}
 
 // V4 encoding will be seperated by semicolons, to be semi backwards compatible with V3-. FIELDS:
 // V4 Identification: "V4"
