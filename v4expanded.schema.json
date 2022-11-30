@@ -1,0 +1,67 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "$defs": {
+        "cell": {
+            "type": "object",
+            "properties": {
+                "modInternalID": { "type": "number" },
+                "modExternalID": { "type": "number" },
+                "cellShortID": { "type": "number" }
+            },
+            "required": ["modExternalID", "cellShortID"]
+        }
+    },
+    "properties": {
+        "modList": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "referenceAddress": {
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "pattern": "^https?:\\/\\/\\w+\\.\\w+((\\/\\w*)*)$"
+                            },
+							{
+								"type": "integer",
+								"minimum": 0,
+								"exclusiveMaximum": 18446744073709551616
+							}
+                        ]
+                    },
+                    "permissions": {
+                        "type": "string",
+                        "pattern": "^[AD][NS][NO]$"
+                    }
+                },
+                "required": ["referenceAddress"]
+            }
+        },
+        "cellOrder": {
+            "type": "object",
+            "properties": {
+                "beforeGenerator": { "$ref": "#/$defs/cell" },
+                "afterGenerator": { "$ref": "#/$defs/cell" },
+                "beforeCW": { "$ref": "#/$defs/cell" },
+                "afterCW": { "$ref": "#/$defs/cell" },
+                "beforeCCW": { "$ref": "#/$defs/cell" },
+                "afterCCW": { "$ref": "#/$defs/cell" },
+                "beforeMover": { "$ref": "#/$defs/cell" },
+                "afterMover": { "$ref": "#/$defs/cell" }
+            },
+            "required": [
+                "beforeGenerator",
+                "afterGenerator",
+                "beforeCW",
+                "afterCW",
+                "beforeCCW",
+                "afterCCW",
+                "beforeMover",
+                "afterMover"
+            ]
+        }
+    },
+    "required": ["cellOrder"]
+}
