@@ -24,11 +24,21 @@
                                 "type": "string",
                                 "pattern": "^https?:\\/\\/\\w+\\.\\w+((\\/\\w*)*)$"
                             },
-							{
-								"type": "integer",
-								"minimum": 0,
-								"exclusiveMaximum": 18446744073709551616
-							}
+                            {
+                                "type": "array",
+                                "prefixItems": [
+                                    {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 18446744073709551616
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 18446744073709551616
+                                    }
+                                ]
+                            }
                         ]
                     },
                     "permissions": {
@@ -37,6 +47,19 @@
                     }
                 },
                 "required": ["referenceAddress"]
+            }
+        },
+        "coreDisabled": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "referenceAddress": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "exclusiveMaximum": 18446744073709551616
+                    }
+                }
             }
         },
         "cellOrder": {
