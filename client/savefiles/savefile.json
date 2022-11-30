@@ -1,0 +1,19 @@
+{
+	"modList": [
+		{
+			"name": "Trash Cell, but better",
+			"referenceAddress": [
+				7171892628893725245,
+				7171892774920211269
+			],
+			"permissions": "SN",
+			"config": {
+				"disableMainTrashCell": true
+			}
+		},
+		{
+			"name": "Walls can move",
+			"referenceAddress": "glitch.me"
+		}
+	]
+}
